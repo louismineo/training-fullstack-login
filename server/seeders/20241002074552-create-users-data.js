@@ -1,5 +1,7 @@
 'use strict';
 
+const argon2 = require('argon2') 
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -13,18 +15,27 @@ module.exports = {
      * }], {});
     */
 
-    await queryInterface.bulkInsert('departments', [
+      await queryInterface.bulkInsert('users', [
       {
+        username: 'Admin',
+        password: await argon2.hash('admin'),
         deptId: 1,
-        name: 'Admin'
+        createdAt:'2024-10-01 14:18:28.499+08',
+        updatedAt:'2024-10-01 14:18:28.499+08'
       },
       {
+        username: 'PS_person',
+        password: await argon2.hash('professionalservices'),
         deptId: 2,
-        name: 'PS'
+        createdAt:'2024-10-01 14:18:28.499+08',
+        updatedAt:'2024-10-01 14:18:28.499+08'
       },
       {
+        username: 'HR_person',
+        password: await argon2.hash('humanresources'),
         deptId: 3,
-        name: 'HR'
+        createdAt:'2024-10-01 14:18:28.499+08',
+        updatedAt:'2024-10-01 14:18:28.499+08'
       }
     ], {});
   },

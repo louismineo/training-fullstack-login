@@ -1,7 +1,6 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction} from "express";
 import { GetAllEmployeesFromDB,AddNewEmployeeIntoDB,GetEmployeeByIDFromDB,UpdateEmployeeByIDFromDB,DeleteEmployeeByIDFromDB} from "../services/employee.service";
 import {employeeRequestSchema,EmployeeRequest, EmployeeDef, ErrorResponse,GetAllEmployeeResponse, EmployeeReqToDef, getAllEmployeesResponse, errorResponseSchema,CreateZODErrorString } from "../types/employee.model"
-import { NextFunction } from "connect";
 import {ErrorHandler} from '../errors/employee.errors';
 
 

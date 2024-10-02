@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const department = require('./department');
 module.exports = (sequelize, DataTypes) => {
   class Employee extends Model {
     /**
@@ -11,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      /*
+      this.belongsTo(department)
+      */
     }
 
     toJSON()
