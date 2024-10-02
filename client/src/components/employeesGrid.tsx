@@ -10,6 +10,7 @@ export const EmployeesGrid = () =>
 {
     const isDesktop:boolean = useAppSelector((state)=>state.ui.isDesktop)
 
+    /*
     const componentStyle = {
         display:"Grid" ,
         height : isDesktop ? '85%' : 'auto',
@@ -19,6 +20,7 @@ export const EmployeesGrid = () =>
         gridTemplateRows: `repeat(${isDesktop ? 5 : 10}, 1fr)`,
         gap: '0%'
     }
+    */
 
     
 
@@ -43,7 +45,7 @@ export const EmployeesGrid = () =>
     }
 
 
-    const current10Employees = getPaginatedData(employeesArray, pageNumber, cardsPerPage);
+    const currentTenEmployees = getPaginatedData(employeesArray, pageNumber, cardsPerPage);
     //console.log(current10Employees)
 
     
@@ -58,10 +60,10 @@ export const EmployeesGrid = () =>
             justifyItems:'center',
             alignItems: 'center',
             gridTemplateColumns: `repeat(${isDesktop ? 2 : 1}, 1fr)`,
-            gridTemplateRows: `repeat(${isDesktop ? 5 : (current10Employees.length >= 10 ? 10: current10Employees.length )}, 1fr)`,
+            gridTemplateRows: `repeat(${isDesktop ? 5 : (currentTenEmployees.length >= 10 ? 10: currentTenEmployees.length )}, 1fr)`,
             gap: '0%'
         }}>
-            {current10Employees.map((emp,index) =>
+            {currentTenEmployees.map((emp,index) =>
                 {
                     return(
                         <EmployeeCard key = {index} emp={emp}/>

@@ -37,8 +37,13 @@ export const EmployeeForm = ({isAdd, employee}:EmployeeFormProp) =>
 
     const validateName = (input:string)=>
     {
+        const regex = new RegExp('^[A-Za-z][A-Za-z0-9_]{7,29}$')
+
+
         if(input.length <4 || input.length >30 )
             return 'Name must be 4 to 30 characters.'
+        else if (regex.test(input))
+            return 'Name must not contain symbols or numbers.'
         else
             return '';
     }
@@ -47,6 +52,8 @@ export const EmployeeForm = ({isAdd, employee}:EmployeeFormProp) =>
     {
         if (input < 0)
             return 'Salary cannot be negative'
+        else if (input > Number.MAX_SAFE_INTEGER )
+            return 'Unrealistic salary, salary too large'
         else 
             return '';
     }
@@ -102,9 +109,9 @@ export const EmployeeForm = ({isAdd, employee}:EmployeeFormProp) =>
         const salaryError = validateSalary(formData.salary);
         const departmentError = validateDepartment(formData.department);
         
-        console.log("name:"+!!nameError);
-        console.log("salary"+!!salaryError);
-        console.log("dept"+!!departmentError);
+        //console.log("name:"+!!nameError);
+        //console.log("salary"+!!salaryError);
+        //console.log("dept"+!!departmentError);
 
         if(nameError !=='' || salaryError !=='' || departmentError !=='')
         {
@@ -123,12 +130,12 @@ export const EmployeeForm = ({isAdd, employee}:EmployeeFormProp) =>
             if(isAdd)
             {
                 dispatch(createEmployeeData(formData.name,formData.salary,formData.department))
-                console.log(formData)
+                //console.log(formData)
             }
             else
             {
                 dispatch(updateEmployeeData(employee.uuid,formData.name,formData.salary,formData.department))
-                console.log(formData)
+                //console.log(formData)
             }
 
             alert(isAdd? formData.name + " has been added": employee.uuid + " has been edited.")

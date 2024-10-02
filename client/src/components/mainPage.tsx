@@ -19,7 +19,7 @@ export const MainPage = () =>
     const dispatch = useAppDispatch();
     useEffect(()=>
     {
-        console.log('Dispatching action ... readEmployeeData');
+        //console.log('Dispatching action ... readEmployeeData');
         dispatch(readEmployeeData())
     },[dispatch])
 
