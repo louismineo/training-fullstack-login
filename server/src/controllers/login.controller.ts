@@ -8,7 +8,7 @@ export async function Login(req: Request, res:Response, next:NextFunction)
 {
     try
     {
-        return res.status(200).json({'status' : await LoginHandler(req.body.username, req.body.password)});
+        return res.status(200).json({'Login:' : await LoginHandler(req.body.username, req.body.password)});
     }
     catch (e : any)
     {

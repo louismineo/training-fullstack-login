@@ -5,9 +5,6 @@ const {User} = require ('../../models')
 
 export async function LoginHandler(username:string ,plaintextPassword:string) : Promise<any>
 {
-
-    
-
     //find username
     const user = await User.findOne({where:{'username' : username}})
     if(!user)
@@ -22,7 +19,17 @@ export async function LoginHandler(username:string ,plaintextPassword:string) : 
     
     
     // return jwt
-    return "This should be JWT Token";
+    try 
+    {
+        const token = jwt.sign({id : user.username , deptId : user.deptId}, 'this_is_a_jwt_secret_key', {expiresIn: '1h'});
+        return token
+    }
+    catch (e)
+    {
+        console.log(e)
+        //throw new Error(e.message)
+    }
+    
 
 }
 
