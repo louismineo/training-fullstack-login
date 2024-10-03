@@ -2,7 +2,7 @@ import { Header } from './header'
 import { EmployeesGrid } from './employeesGrid'
 import { Footer } from './footer'
 
-import jwt_decode from 'jwt-decode';
+import { decodeJwt } from 'jose';
 
 import { uiActions,userStates } from '../store/uiSlice'
 import { useEffect } from "react"
@@ -32,14 +32,16 @@ export const MainPage = () =>
         else
         {
             // decode the deptId, store in redux
-            const decoded = jwt_decode(token);
-            //console.log(decoded)
+            const decoded = decodeJwt(token);
+            console.log(decoded.deptId)
+            dispatch(uiActions.updateDeptId(Number(decoded.deptId)))
             //const selector = useAppSelector(); 
             
         }
     },[dispatch])
 
 
+     const deptId = useAppSelector((state)=>state.ui.currentUserDeptId)
     // get the dispatch
     
     useEffect(()=>

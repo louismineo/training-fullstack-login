@@ -46,6 +46,10 @@ const uiSlice = createSlice(
         initialState,  // `createSlice` will infer the state type from the `initialState` argument
         reducers:
         {
+            updateDeptId(state, action:PayloadAction<number>)
+            {
+                state.currentUserDeptId = action.payload;
+            },
             updateDepartmentsMap(state,action:PayloadAction<Map<string,number>>)
             {
                 state.departments = action.payload
