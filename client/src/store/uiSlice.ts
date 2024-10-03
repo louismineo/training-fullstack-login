@@ -18,7 +18,8 @@ interface UiState
     curentPageNumber:   number,
     minPageNumber:      number, // affected by employee count
     maxPageNumber:      number  // affected by employee count and self's maxRecords
-    currentUserState:   userStates
+    currentUserState:   userStates,
+    departments:        object
 }
 
 
@@ -31,7 +32,8 @@ const initialState : UiState =
     curentPageNumber: 1,
     minPageNumber:1,
     maxPageNumber: 1,
-    currentUserState : userStates.isView
+    currentUserState : userStates.isView,
+    departments: {}
 
 }
 
@@ -42,6 +44,10 @@ const uiSlice = createSlice(
         initialState,  // `createSlice` will infer the state type from the `initialState` argument
         reducers:
         {
+            updateDepartmentsMap(state,action:PayloadAction<Map<string,number>>)
+            {
+                state.departments = action.payload
+            },
             updateIsDesktop(state,action : PayloadAction<boolean>)
             {
                 state.isDesktop = action.payload

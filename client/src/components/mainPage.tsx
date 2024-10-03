@@ -7,19 +7,16 @@ import { uiActions,userStates } from '../store/uiSlice'
 import { useEffect } from "react"
 import { useAppDispatch } from '../store/hooks'
 import { readEmployeeData } from '../store/employeeActions'
+
 import { useNavigate } from 'react-router-dom';
 
 
 export const MainPage = () =>
 {
     const navigate = useNavigate();
-
+    const dispatch = useAppDispatch();
 
     //checking sessionstorage has the token or not
-
-    
-
-
     useEffect(()=>
     {
         const token = sessionStorage.getItem('jwtToken');
@@ -31,7 +28,7 @@ export const MainPage = () =>
     },[])
 
     // get the dispatch
-    const dispatch = useAppDispatch();
+    
     useEffect(()=>
     {
         //console.log('Dispatching action ... readEmployeeData');

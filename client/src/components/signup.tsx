@@ -1,9 +1,24 @@
-import React, { ChangeEvent,FormEvent, useState } from 'react';
-import { TextField, Button, Paper, Typography } from '@mui/material';
-
+import React, { ChangeEvent,FormEvent, useState, useEffect } from 'react';
+import { TextField, Button, Paper, Typography, FormControl, InputLabel,Select,FormHelperText,MenuItem,SelectChangeEvent } from '@mui/material';
+import { useAppSelector,useAppDispatch } from '../store/hooks'
+import { readDepartmentData } from '../store/departmentActions'
+import { SignUp as SignUpAction } from '../store/loginSignUpActions';
+import {useNavigate } from 'react-router-dom';
 
 export const SignUp = () =>
 {
+    const navigate = useNavigate();
+
+    const dispatch = useAppDispatch();
+    //getting the department mapping
+    useEffect(()=>
+    {
+        //console.log('Dispatching action ... readEmployeeData');
+        dispatch(readDepartmentData())
+    },[dispatch])
+    const depts:object = useAppSelector((state)=>state.ui.departments)
+    const departmentsArray = Array.isArray(depts) ? depts : [];
+
 
     const [signUpFormErrorData, setSignUpFormErrorData] = useState({
         usernameError:'',
@@ -48,10 +63,10 @@ export const SignUp = () =>
     const [signUpFormData, setSignUpFormData] = useState({
         username:'',
         password:'',
-        departmentId:1
+        departmentId:''
     });
 
-    const handleChange = (e:ChangeEvent<HTMLTextAreaElement | HTMLInputElement> ) =>//| SelectChangeEvent<string>)=>
+    const handleChange = (e:ChangeEvent<HTMLTextAreaElement | HTMLInputElement> | SelectChangeEvent<string>)=>
     {
         const { name, value } = e.target;
 
@@ -83,10 +98,32 @@ export const SignUp = () =>
         }
     };
 
-    const handleSignUp = () =>
+    const SignUpHandler = (e:FormEvent) =>
     {
-        console.log("sign up button called")
+        e.preventDefault();
+
+        const usernameError = validateUsername(signUpFormData.username);
+        const plaintextPasswordError = validatePassword(signUpFormData.password);
+        const departmentIdError = validateDepartment(Number(signUpFormData.departmentId));
+        
+
+        if(usernameError !=='' || plaintextPasswordError !=='' || departmentIdError !=='')
+        {
+            setSignUpFormErrorData(
+                {
+                    usernameError: usernameError,
+                    plaintextPasswordError: plaintextPasswordError,
+                    deptIdError : departmentIdError
+                }
+            )
+            return;
+        }
+
+        dispatch(SignUpAction(signUpFormData.username,signUpFormData.password, Number(signUpFormData.departmentId)))
+        navigate('/login',{});
     }
+
+
 
     return (
 
@@ -102,6 +139,8 @@ export const SignUp = () =>
                     onChange={handleChange}
                     variant="outlined"
                     fullWidth
+                    error = {!!signUpFormErrorData.usernameError}
+                    helperText = {signUpFormErrorData.usernameError}
                     margin="normal"
                     required
                     />
@@ -113,10 +152,33 @@ export const SignUp = () =>
                     onChange={handleChange}
                     variant="outlined"
                     fullWidth
+                    error = {!!signUpFormErrorData.plaintextPasswordError}
+                    helperText = {signUpFormErrorData.plaintextPasswordError}
                     margin="normal"
                     required
                     />
-                    <Button type="submit" variant="contained" color="primary" fullWidth>
+
+                    {/* Department Select */}
+                    <FormControl fullWidth error = {!!signUpFormErrorData.deptIdError} margin="normal">
+                        <InputLabel id="department-label">Department</InputLabel>
+                        <Select
+                            labelId="department-label"
+                            name="departmentId"
+                            value={signUpFormData.departmentId}
+                            onChange={handleChange}
+                            label="Department"
+                            variant="outlined"
+                            required
+                            >
+                            {departmentsArray.map((dept)=>
+                                (
+                                    <MenuItem value={dept.deptId}>{dept.name}</MenuItem>
+                                ))
+                            }
+                        </Select>
+                        <FormHelperText>{signUpFormErrorData.deptIdError}</FormHelperText>
+                    </FormControl>
+                    <Button type="submit" variant="contained" color="primary" onClick={SignUpHandler}fullWidth>
                     Sign Up
                     </Button>
                 </form>
