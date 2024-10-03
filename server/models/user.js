@@ -27,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
     {
       type: DataTypes.STRING,
       allowNull:false,
+      unique:
+      {
+        msg:'Username already exists',
+      },
       validate:
       {
         notNull:{msg:"User must have a username."},
@@ -40,7 +44,14 @@ module.exports = (sequelize, DataTypes) => {
       validate:
       {
         notNull:{msg:"User must have a password."},
-        notEmpty:{msg:"Password cannot be empty."}
+        notEmpty:{msg:"Password cannot be empty."},
+        isValidHash(value) {
+          // Assume you expect an Argon2 hash that should be a Base64 string of a certain length
+          const argon2HashRegex = /^\$argon2[a-z]+\$v=\d+\$m=\d+,t=\d+,p=\d+\$[A-Za-z0-9+/=]+\$[A-Za-z0-9+/=]+$/;
+          if (!argon2HashRegex.test(value)) {
+            throw new Error('Invalid password hash format.');
+          }
+        }
       }
     },
     deptId:

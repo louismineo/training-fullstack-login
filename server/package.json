@@ -11,7 +11,11 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "clean":
+    "echo 'CLEARING ALL DATA' && npx sequelize-cli db:migrate:undo:all",
+    "migrate_up" :"echo 'Migrating UP' && npx sequelize-cli db:migrate && echo 'undoing employees-rename-department-to-deptId migration'  && npx sequelize-cli db:migrate:undo --name employees-rename-department-to-deptId.js",
+    "repopulate":"echo 'Seeding employees & user tables' && npx sequelize-cli db:seed:all && echo 'Giving employees deptId column' && npx sequelize-cli db:migrate --to employees-rename-department-to-deptId.js"
   },
   "author": "",
   "license": "ISC",
