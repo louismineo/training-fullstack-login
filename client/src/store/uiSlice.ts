@@ -19,7 +19,8 @@ interface UiState
     minPageNumber:      number, // affected by employee count
     maxPageNumber:      number  // affected by employee count and self's maxRecords
     currentUserState:   userStates,
-    departments:        object
+    departments:        object,
+    currentUserDeptId:  number,
 }
 
 
@@ -33,7 +34,8 @@ const initialState : UiState =
     minPageNumber:1,
     maxPageNumber: 1,
     currentUserState : userStates.isView,
-    departments: {}
+    departments: {},
+    currentUserDeptId : 0
 
 }
 
