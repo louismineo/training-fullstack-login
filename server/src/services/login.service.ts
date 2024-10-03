@@ -20,9 +20,18 @@ export async function LoginHandler(username:string ,plaintextPassword:string) : 
     
     // return jwt
     try 
-    {
-        const token = jwt.sign({id : user.username , deptId : user.deptId}, 'this_is_a_jwt_secret_key', {expiresIn: '1h'});
-        return token
+    {  
+        
+        const private_key = process.env.JWT_PRIVATE_KEY
+        if (private_key)
+        {
+            const token = jwt.sign({id : user.username , deptId : user.deptId}, private_key, {expiresIn: '1h'});
+            return token;
+        }
+        else
+        {
+            throw new Error ("JWT_PRIVATE_KEY unable to be read from .env file")
+        }
     }
     catch (e)
     {

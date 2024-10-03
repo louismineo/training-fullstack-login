@@ -12,8 +12,23 @@ import { useNavigate } from 'react-router-dom';
 
 export const MainPage = () =>
 {
-
     const navigate = useNavigate();
+
+
+    //checking sessionstorage has the token or not
+
+    
+
+
+    useEffect(()=>
+    {
+        const token = sessionStorage.getItem('jwtToken');
+
+        if(!token)
+            {
+                navigate('/login',{});
+            }
+    },[])
 
     // get the dispatch
     const dispatch = useAppDispatch();

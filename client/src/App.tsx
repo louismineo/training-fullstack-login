@@ -3,10 +3,14 @@ import './App.css'
 import {BrowserRouter, Routes, Route } from 'react-router-dom'
 import { MainPage } from './components/mainPage';
 import { AddEditPage } from './components/addEditPage';
+import { Login } from './components/login';
+import { SignUp } from './components/signup';
 
 import { uiActions,userStates } from './store/uiSlice'
 import { useEffect } from "react"
 import { useAppDispatch } from './store/hooks'
+
+
 
 
 function App() {
@@ -46,6 +50,8 @@ return(
       <Route path = "/" element = {<MainPage/>}/>
       <Route path = "/addEdit" element = {<AddEditPage/>}/>
       <Route path = "/addEdit/:uuid" element = {<AddEditPage/>}/>
+      <Route path = "/login" element = {<Login/>}/>
+      <Route path = "/signup" element = {<SignUp/>}/>
     </Routes>
   </BrowserRouter>
 )
