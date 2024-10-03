@@ -6,10 +6,11 @@ import {ErrorHandler} from '../errors/employee.errors';
 
 export async function GetAllEmployees(req:Request, res:Response, next:NextFunction) 
 {
+    const {deptId} = req.query;
     try
     {
         //call getAllUsersFromService
-        return res.status(200).json({'employees' :await GetAllEmployeesFromDB()});
+        return res.status(200).json({'employees' :await GetAllEmployeesFromDB(Number(deptId))});
     }
     catch (e)
     {

@@ -5,10 +5,21 @@ import {ErrorHandler, LogicError, LogicErrorEnum,} from '../errors/employee.erro
 
 const {Employee} = require('../../models');
 
-export async function GetAllEmployeesFromDB() : Promise<any>
+export async function GetAllEmployeesFromDB(deptIdParam:number | undefined) : Promise<any>
 {
+    let allEmployees;
 
-    const allEmployees = await Employee.findAll({attributes : ['uuid','name','salary','department']})
+    if(deptIdParam == 1 || Number.isNaN(deptIdParam))
+    {
+        allEmployees = await Employee.findAll({attributes : ['uuid','name','salary','department']})
+    }
+    else
+    {
+        allEmployees = await Employee.findAll({attributes : ['uuid','name','salary','department'],
+                                                where: {deptId : deptIdParam}
+        });
+    }
+    
     return allEmployees;
 }
 
