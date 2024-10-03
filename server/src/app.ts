@@ -2,6 +2,7 @@
 import express,{ Request, Response, NextFunction} from 'express'
 import routerEmployees from './routes/employee.route'
 import routerUsers from './routes/login.route'
+import routerDepartments from './routes/department.route'
 import { urlencoded } from 'body-parser';
 import router from './routes/employee.route';
 const cors = require ('cors')
@@ -34,6 +35,8 @@ app.get("/",(req: Request , res: Response) =>
 app.use('/',routerEmployees);
 
 app.use('/',routerUsers);
+
+app.use('/', routerDepartments);
 
 app.listen(port_number, async ()=>{
     console.log("Application listening at http://localhost:"+port_number);

@@ -8,6 +8,8 @@ let router = Router();
 
 router.post('/login', Login);
 
+
+// POST signup
 router.post('/signup',SignUp)
 
 export default router;
