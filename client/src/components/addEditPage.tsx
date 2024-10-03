@@ -34,22 +34,6 @@ export const AddEditPage = () =>
     }
         
 
-
-    /*
-    return (
-        <div>
-            <Header 
-                headerText={isAddMode? 'Add Employee' : 'Edit Employee'} 
-                buttonText='Go Back' 
-                buttonCallback={GoBackToMain}
-            />
-            <div style = {{marginLeft:'10%', marginRight:'10%'}}>
-            <EmployeeForm isAddMode = {isAddMode} employeeData={employeeData}/>
-            </div>
-        </div>
-    )
-    */
-
     return (
         <div>
             <Header 

@@ -20,7 +20,7 @@ export async function SignUp(req: Request, res:Response, next:NextFunction)
 {
     try
     {
-        return res.status(200).json({'status' : await SignUpHandler(req.body.username, req.body.password,req.body.deptId)});
+        return res.status(200).json(await SignUpHandler(req.body.username, req.body.password,req.body.deptId));
     }
     catch (e : any)
     {
