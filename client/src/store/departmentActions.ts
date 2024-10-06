@@ -8,6 +8,11 @@ type deptMapping =
     name:string
 }
 
+export const getDeptIdFromString=(deptString:string)=>
+{
+    
+}
+
 export const readDepartmentData = () => // returns array, not object
 {
     return async (dispatch:any) =>

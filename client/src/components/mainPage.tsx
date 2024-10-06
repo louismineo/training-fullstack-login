@@ -16,14 +16,10 @@ export const MainPage = () =>
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    
-
     //checking sessionstorage has the token or not
     useEffect(()=>
     {
         const token = sessionStorage.getItem('jwtToken');
-
-        
 
         if(!token)
         {
@@ -39,16 +35,7 @@ export const MainPage = () =>
             
         }
     },[dispatch])
-
-
-     const deptId = useAppSelector((state)=>state.ui.currentUserDeptId)
-    // get the dispatch
     
-    useEffect(()=>
-    {
-        //console.log('Dispatching action ... readEmployeeData');
-        dispatch(readEmployeeData())
-    },[dispatch])
 
     const GoToAdd = () =>{
         dispatch(uiActions.updateUserState(userStates.isAdd))

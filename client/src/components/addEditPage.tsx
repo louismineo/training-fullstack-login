@@ -23,6 +23,8 @@ export const AddEditPage = () =>
     const location = useLocation();
     const employeeData = location.state || {uuid:'' ,name: '', salary: 0, department: '' }; // Fallback in case no state is passed
 
+    
+
 
 
     const {uuid} = useParams(); // Get uuid from the URL (if exists)

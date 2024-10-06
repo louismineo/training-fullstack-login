@@ -1,9 +1,11 @@
 import { TextField, MenuItem, Select, FormControl, InputLabel, Button, SelectChangeEvent, FormHelperText } from '@mui/material';
 import { createEmployeeData, updateEmployeeData } from '../store/employeeActions';
-import { useAppDispatch } from '../store/hooks';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { ChangeEvent, FormEvent, useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { uiActions,userStates } from '../store/uiSlice';
+import { readDepartmentData } from '../store/departmentActions';
+
 
 export type employee = 
 {
@@ -11,6 +13,7 @@ export type employee =
     name:string;
     salary:number;
     department:string;
+    departmentId:number;
 }
 
 type EmployeeFormProp = 
@@ -28,6 +31,17 @@ export const EmployeeForm = ({isAdd, employee}:EmployeeFormProp) =>
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
+    //getting the department mapping
+    useEffect(()=>
+    {
+        dispatch(readDepartmentData())
+    },[dispatch])
+    const depts:object = useAppSelector((state)=>state.ui.departments)
+    const departmentsArray = Array.isArray(depts) ? depts : [];
+    //filter out the admin
+    const filteredDepartment = departmentsArray.filter(dept => dept.deptId !== 1);
+
+console.log(filteredDepartment);
 
     const [formErrorData, setFormErrorData] = useState({
         name: '',
@@ -69,36 +83,51 @@ export const EmployeeForm = ({isAdd, employee}:EmployeeFormProp) =>
     const [formData, setFormData] = useState({
         name: employee.name,
         salary: employee.salary,
-        department: employee.department
+        department: employee.department,
+        departmentId: employee.departmentId
     });
 
     const handleChange = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
         const { name, value } = e.target;
 
         // if the name of the form input element is "salary", convert the value to a number
-        const newValue = name === 'salary' ? Number(value):value;       
-        
-        setFormData({
-            ...formData,
-            [name]: newValue
-        });
+        let newValue: any = value;
 
-
-        switch(name)
+        // special parsing and storin formData just for departments menu
+        if (name === 'department') 
         {
+            // value is a serialized string with both name and id
+            const parsedDeptNameAndId = JSON.parse(value);  
+            setFormData({
+                ...formData,
+                department: parsedDeptNameAndId.deptName,
+                departmentId: parsedDeptNameAndId.deptId // Store departmentId separately
+            });
+        } 
+        else 
+        {
+            // For other fields, process normally
+            newValue = name === 'salary' ? Number(value) : value;
+            setFormData({
+                ...formData,
+                [name]: newValue
+            });
+        }
+
+        // Update form errors based on the input field name
+        switch (name) {
             case 'name':
-                setFormErrorData({...formErrorData, name:validateName(String(newValue))})
+                setFormErrorData({ ...formErrorData, name: validateName(String(newValue)) });
                 break;
             case 'salary':
-                setFormErrorData({...formErrorData, salary:validateSalary(Number(newValue))})
+                setFormErrorData({ ...formErrorData, salary: validateSalary(Number(newValue)) });
                 break;
             case 'department':
-                setFormErrorData({...formErrorData, department:validateDepartment(String(newValue))})
+                setFormErrorData({ ...formErrorData, department: validateDepartment(String(newValue)) });
                 break;
             default:
                 break;
         }
-        
     };
 
     const submitHandler = (e : FormEvent) =>
@@ -129,12 +158,12 @@ export const EmployeeForm = ({isAdd, employee}:EmployeeFormProp) =>
         {
             if(isAdd)
             {
-                dispatch(createEmployeeData(formData.name,formData.salary,formData.department))
+                dispatch(createEmployeeData(formData.name,formData.salary,formData.department,formData.departmentId))
                 //console.log(formData)
             }
             else
             {
-                dispatch(updateEmployeeData(employee.uuid,formData.name,formData.salary,formData.department))
+                dispatch(updateEmployeeData(employee.uuid,formData.name,formData.salary,formData.department,formData.departmentId))
                 //console.log(formData)
             }
 
@@ -190,14 +219,19 @@ export const EmployeeForm = ({isAdd, employee}:EmployeeFormProp) =>
                 <Select
                     labelId="department-label"
                     name="department"
-                    value={formData.department}
+                    value={JSON.stringify({ deptId: formData.departmentId, deptName: formData.department })}
                     onChange={handleChange}
                     label="Department"
                     variant="outlined"
                 required
-                >
-                    <MenuItem value="PS">PS</MenuItem>
-                    <MenuItem value="HR">HR</MenuItem>
+                >{filteredDepartment.map((dept) => (
+                    <MenuItem
+                        key={dept.id}
+                        value={JSON.stringify({ deptId: dept.id, deptName: dept.name })} // Pass both name and id as JSON string
+                    >
+                        {dept.name}
+                    </MenuItem>
+                ))}
                 </Select>
                 <FormHelperText>{formErrorData.department}</FormHelperText>
             </FormControl>

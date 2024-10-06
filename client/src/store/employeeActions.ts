@@ -1,20 +1,24 @@
 
 import { employeesActions } from "./employeesSlice";
+import { useAppSelector } from "./hooks";
 import { uiActions } from "./uiSlice";
 import axios from "axios";
 
-export const createEmployeeData = (empName:string, empSalary:number, empDepartment:string) =>
+
+
+export const createEmployeeData = (empName:string, empSalary:number, empDepartment:string, empDeptId:number) =>
 {
     return async (dispatch:any) =>
         {
-            const createEmployeeInDB = async(empName:string, empSalary:number, empDepartment:string ) =>
+            const createEmployeeInDB = async(empName:string, empSalary:number, empDepartment:string,deptId:number ) =>
             {
 
                 const employeeData = 
                 {
                     "name" : empName,
                     "salary": empSalary,
-                    "department": empDepartment
+                    "department": empDepartment,
+                    "deptId": deptId
                 }
 
                 const response = await axios.post('http://localhost:1337/employee', employeeData
@@ -26,9 +30,10 @@ export const createEmployeeData = (empName:string, empSalary:number, empDepartme
     
             try
             {
-                await createEmployeeInDB(empName, empSalary, empDepartment);
+                await createEmployeeInDB(empName, empSalary, empDepartment,empDeptId);
                 //refresh after deletion
-                readEmployeeData();
+                const deptId = useAppSelector((state)=>state.ui.currentUserDeptId)
+                dispatch(readEmployeeData(deptId));
     
             }
             catch(e:any)
@@ -39,13 +44,17 @@ export const createEmployeeData = (empName:string, empSalary:number, empDepartme
 }
 
 
-export const readEmployeeData = () => // returns array, not object
+export const readEmployeeData = (deptId:number) => // returns array, not object
 {
+    
     return async (dispatch:any) =>
     {
-        const fetchAllEmployeesFromDB = async() =>
+        const fetchAllEmployeesFromDB = async(deptId : number) =>
         {
-            const response = await axios.get('http://localhost:1337/employee')
+            const response = await axios.get('http://localhost:1337/employee?deptId='+ deptId)
+
+            console.log("here " + deptId)
+            console.log(response)
 
             if(response.status !== 200)
                 throw Error(response.data);
@@ -56,7 +65,7 @@ export const readEmployeeData = () => // returns array, not object
 
         try
         {
-            const employeeData = await fetchAllEmployeesFromDB();
+            const employeeData = await fetchAllEmployeesFromDB(deptId);
             dispatch(employeesActions.refreshData(employeeData));
             dispatch(uiActions.updatePage(employeeData.length));
 
@@ -68,18 +77,19 @@ export const readEmployeeData = () => // returns array, not object
     }
 }
 
-export const updateEmployeeData = (empUUID:string, empName:string, empSalary:number, empDepartment:string ) =>
+export const updateEmployeeData = (empUUID:string, empName:string, empSalary:number, empDepartment:string, empDeptId:number ) =>
 {
     return async (dispatch:any) =>
         {
-            const updateEmployeeInDB = async(empUUID:string, empName:string, empSalary:number, empDepartment:string ) =>
+            const updateEmployeeInDB = async(empUUID:string, empName:string, empSalary:number, empDepartment:string, empDeptId:number ) =>
             {
 
                 const employeeData = 
                 {
                     "name" : empName,
                     "salary": empSalary,
-                    "department": empDepartment
+                    "department": empDepartment,
+                    "deptId": empDeptId
                 }
 
                 const response = await axios.put('http://localhost:1337/employee/'+empUUID, employeeData
@@ -91,9 +101,10 @@ export const updateEmployeeData = (empUUID:string, empName:string, empSalary:num
     
             try
             {
-                await updateEmployeeInDB(empUUID, empName, empSalary, empDepartment);
+                await updateEmployeeInDB(empUUID, empName, empSalary, empDepartment,empDeptId);
                 //refresh after deletion
-                dispatch(readEmployeeData());
+                const deptId = useAppSelector((state)=>state.ui.currentUserDeptId)
+                dispatch(readEmployeeData(deptId));
     
             }
             catch(e:any)
@@ -120,7 +131,8 @@ export const deleteEmployeeData = (empUUID:string) =>
             {
                 await deleteEmployeeFromDB(empUUID);
                 //refresh after deletion
-                dispatch(readEmployeeData());
+                const deptId = useAppSelector((state)=>state.ui.currentUserDeptId)
+                dispatch(readEmployeeData(deptId));
     
             }
             catch(e:any)

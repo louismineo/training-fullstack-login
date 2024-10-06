@@ -13,7 +13,6 @@ export const SignUp = () =>
     //getting the department mapping
     useEffect(()=>
     {
-        //console.log('Dispatching action ... readEmployeeData');
         dispatch(readDepartmentData())
     },[dispatch])
     const depts:object = useAppSelector((state)=>state.ui.departments)

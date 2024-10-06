@@ -2,14 +2,15 @@
 import { EmployeeCard } from "./employeeCard"
 import { Employee } from "../store/employeesSlice"
 
-import { useAppSelector } from '../store/hooks'
+import { useAppSelector,useAppDispatch } from '../store/hooks'
 import { useEffect } from "react"
-
+import { readEmployeeData } from "../store/employeeActions"
 
 export const EmployeesGrid = () =>
 {
     const isDesktop:boolean = useAppSelector((state)=>state.ui.isDesktop)
 
+    const dispatch = useAppDispatch();
     /*
     const componentStyle = {
         display:"Grid" ,
@@ -22,6 +23,14 @@ export const EmployeesGrid = () =>
     }
     */
 
+    const deptId = useAppSelector((state)=>state.ui.currentUserDeptId)
+
+    useEffect(()=>
+        {
+            
+            //console.log('Dispatching action ... readEmployeeData');
+            dispatch(readEmployeeData(deptId))
+        },[dispatch,deptId])
     
 
     const employeesArray:Employee[] = useAppSelector((state)=>state.employees.employees);
