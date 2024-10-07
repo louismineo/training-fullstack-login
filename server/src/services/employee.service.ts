@@ -11,7 +11,7 @@ export async function GetAllEmployeesFromDB(deptIdParam:number | undefined) : Pr
 
     if(deptIdParam == 1 || Number.isNaN(deptIdParam))
     {
-        allEmployees = await Employee.findAll({attributes : ['uuid','name','salary','department','deptId']})
+        allEmployees = await Employee.findAll({attributes : ['uuid','name','salary','department','deptId'], order:[['deptId', 'ASC']]})
     }
     else
     {

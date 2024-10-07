@@ -87,16 +87,18 @@ export const Login = () =>
                     Login
                     </Button>
                 </form>
-                <Link
-                    component="button"
-                    onClick={()=>
-                        {
-                            navigate("/signup",{})
+                <div style={{display:'flex', justifyContent:'center'}}>
+                    <Link
+                        component="button"
+                        onClick={()=>
+                            {
+                                navigate("/signup",{})
+                            }
                         }
-                    }
-                >
-                    Register Here
+                    >
+                        Register Here
                     </Link>
+                </div>
             </Paper>
         </div>
     )
