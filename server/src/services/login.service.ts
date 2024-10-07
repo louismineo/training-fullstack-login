@@ -54,3 +54,7 @@ export async function SignUpHandler(username:string, plaintextPassword:string, d
     const newUser = await User.create({'username' : username, 'password': await argon2.hash(plaintextPassword), 'deptId':deptId})
     return newUser;
 }
+
+export function sum(a:number,b:number):number {
+    return a+b;
+}
