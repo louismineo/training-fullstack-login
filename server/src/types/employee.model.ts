@@ -10,7 +10,7 @@ export const employeeRequestSchema = zod.object(
         
         name        : zod.string(),
         salary      : zod.number().int(),
-        department  : zod.enum(['HR','PS']),
+        department  : zod.enum(['Admin','HR','PS']),
         deptId: zod.number().int()
     }
 );
@@ -23,7 +23,7 @@ export const employeeDefSchema = zod.object(
         uuid        : zod.string().uuid(),
         name        : zod.string(),
         salary      : zod.number().int(),
-        department  : zod.enum(['HR','PS']),
+        department  : zod.enum(['Admin','HR','PS']),
         deptId: zod.number().int()
     }
 );

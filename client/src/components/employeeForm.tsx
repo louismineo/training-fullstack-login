@@ -38,8 +38,6 @@ export const EmployeeForm = ({isAdd, employee}:EmployeeFormProp) =>
     },[dispatch])
     const depts:object = useAppSelector((state)=>state.ui.departments)
     const departmentsArray = Array.isArray(depts) ? depts : [];
-    //filter out the admin
-    const filteredDepartment = departmentsArray.filter(dept => dept.deptId !== 1);
 
     const [formErrorData, setFormErrorData] = useState({
         name: '',
@@ -98,7 +96,7 @@ export const EmployeeForm = ({isAdd, employee}:EmployeeFormProp) =>
         {
             
             // querying the data from the array
-            const selectedDeptName = filteredDepartment.find(item => item.name === String(value)); 
+            const selectedDeptName = departmentsArray.find(item => item.name === String(value)); 
             setFormData({
                 ...formData,
                 department: value,
@@ -219,7 +217,7 @@ export const EmployeeForm = ({isAdd, employee}:EmployeeFormProp) =>
                     label="Department"
                     variant="outlined"
                 required
-                >{filteredDepartment.map((dept) => (
+                >{departmentsArray.map((dept) => (
                     <MenuItem
                         key={dept.name}
                         value={dept.name} // Pass both name and id as JSON string

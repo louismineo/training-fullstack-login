@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     department:
     {
       type:DataTypes.ENUM,
-      values:['PS','HR'],
+      values:['Admin','PS','HR'],
       allowNull:false,
       validate:
       {
@@ -59,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty:{msg:"Department cannot be empty."},
         isIn:
         {
-          args:[['PS','HR']],
+          args:[['Admin','PS','HR']],
           msg: "Department must be either 'PS' or 'HR'"
         }
       }
@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
     deptId:
     {
       type:DataTypes.INTEGER,
-      values:[2,3],
+      values:[1,2,3],
       allowNull:false,
       validate:
       {
@@ -75,8 +75,8 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty:{msg:"deptId cannot be empty."},
         isIn:
         {
-          args:[[2,3]],
-          msg: "deptId must be either 2 or 3"
+          args:[[1,2,3]],
+          msg: "deptId must be either 1, 2 or 3"
         }
       }
     }
