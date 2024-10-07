@@ -8,6 +8,7 @@ import axios from "axios";
 
 export const createEmployeeData = (empName:string, empSalary:number, empDepartment:string, empDeptId:number) =>
 {
+    
     return async (dispatch:any) =>
         {
             const createEmployeeInDB = async(empName:string, empSalary:number, empDepartment:string,deptId:number ) =>
@@ -20,6 +21,8 @@ export const createEmployeeData = (empName:string, empSalary:number, empDepartme
                     "department": empDepartment,
                     "deptId": deptId
                 }
+
+                console.log(employeeData)
 
                 const response = await axios.post('http://localhost:1337/employee', employeeData
                 )
@@ -91,6 +94,8 @@ export const updateEmployeeData = (empUUID:string, empName:string, empSalary:num
                     "department": empDepartment,
                     "deptId": empDeptId
                 }
+
+                console.log(employeeData)
 
                 const response = await axios.put('http://localhost:1337/employee/'+empUUID, employeeData
                 )

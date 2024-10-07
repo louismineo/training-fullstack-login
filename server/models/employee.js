@@ -63,7 +63,23 @@ module.exports = (sequelize, DataTypes) => {
           msg: "Department must be either 'PS' or 'HR'"
         }
       }
-    } 
+    },
+    deptId:
+    {
+      type:DataTypes.INTEGER,
+      values:[2,3],
+      allowNull:false,
+      validate:
+      {
+        notNull:{msg:"Employee must be allocated to a deptId."},
+        notEmpty:{msg:"deptId cannot be empty."},
+        isIn:
+        {
+          args:[[2,3]],
+          msg: "deptId must be either 2 or 3"
+        }
+      }
+    }
   }, {
     sequelize,
     tableName: 'employees',

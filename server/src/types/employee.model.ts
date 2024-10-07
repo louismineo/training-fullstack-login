@@ -10,7 +10,8 @@ export const employeeRequestSchema = zod.object(
         
         name        : zod.string(),
         salary      : zod.number().int(),
-        department  : zod.enum(['HR','PS'])
+        department  : zod.enum(['HR','PS']),
+        deptId: zod.number().int()
     }
 );
 export type EmployeeRequest = zod.infer<typeof employeeRequestSchema>;
@@ -22,7 +23,8 @@ export const employeeDefSchema = zod.object(
         uuid        : zod.string().uuid(),
         name        : zod.string(),
         salary      : zod.number().int(),
-        department  : zod.enum(['HR','PS'])
+        department  : zod.enum(['HR','PS']),
+        deptId: zod.number().int()
     }
 );
 export type EmployeeDef = zod.infer<typeof employeeDefSchema>;
@@ -42,7 +44,7 @@ export type ErrorResponse = zod.infer<typeof errorResponseSchema>;
 
 export function EmployeeDefToReq( param:EmployeeDef ) : EmployeeRequest
 {
-    return {name:param.name, salary:param.salary, department:param.department};
+    return {name:param.name, salary:param.salary, department:param.department, deptId:param.deptId};
 }
 
 export function EmployeeReqToDef(uuid:string, param:EmployeeRequest ) : EmployeeDef
@@ -50,7 +52,9 @@ export function EmployeeReqToDef(uuid:string, param:EmployeeRequest ) : Employee
     return {uuid:uuid,
             name:param.name,
             salary:param.salary,
-            department:param.department};
+            department:param.department,
+            deptId:param.deptId
+        };
 }
 
 

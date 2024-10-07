@@ -11,11 +11,11 @@ export async function GetAllEmployeesFromDB(deptIdParam:number | undefined) : Pr
 
     if(deptIdParam == 1 || Number.isNaN(deptIdParam))
     {
-        allEmployees = await Employee.findAll({attributes : ['uuid','name','salary','department']})
+        allEmployees = await Employee.findAll({attributes : ['uuid','name','salary','department','deptId']})
     }
     else
     {
-        allEmployees = await Employee.findAll({attributes : ['uuid','name','salary','department'],
+        allEmployees = await Employee.findAll({attributes : ['uuid','name','salary','department','deptId'],
                                                 where: {deptId : deptIdParam}
         });
     }
@@ -25,6 +25,9 @@ export async function GetAllEmployeesFromDB(deptIdParam:number | undefined) : Pr
 
 export async function AddNewEmployeeIntoDB(emp_req:EmployeeRequest) : Promise<any>
 {
+
+    console.log(emp_req)
+
         //insert 
         const newEmployee = await Employee.create(emp_req);
         return newEmployee; 
@@ -51,7 +54,8 @@ export async function UpdateEmployeeByIDFromDB(uuid:string, new_params:EmployeeR
 
     if (employee.name == new_params.name &&
         employee.salary == new_params.salary &&
-        employee.department == new_params.department 
+        employee.department == new_params.department &&
+        employee.deptId == new_params.deptId
     )
         throw new LogicError(LogicErrorEnum.NoChange);
 
@@ -59,6 +63,7 @@ export async function UpdateEmployeeByIDFromDB(uuid:string, new_params:EmployeeR
     employee.name = new_params.name;
     employee.salary = new_params.salary;
     employee.department = new_params.department;
+    employee.deptId = new_params.deptId;
 
 
     await employee.save();

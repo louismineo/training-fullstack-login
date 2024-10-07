@@ -13,7 +13,7 @@ export type employee =
     name:string;
     salary:number;
     department:string;
-    departmentId:number;
+    deptId:number;
 }
 
 type EmployeeFormProp = 
@@ -84,7 +84,7 @@ console.log(filteredDepartment);
         name: employee.name,
         salary: employee.salary,
         department: employee.department,
-        departmentId: employee.departmentId
+        deptId: employee.deptId
     });
 
     const handleChange = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
@@ -92,16 +92,19 @@ console.log(filteredDepartment);
 
         // if the name of the form input element is "salary", convert the value to a number
         let newValue: any = value;
+        
 
+        
         // special parsing and storin formData just for departments menu
         if (name === 'department') 
         {
-            // value is a serialized string with both name and id
-            const parsedDeptNameAndId = JSON.parse(value);  
+            
+            // querying the data from the array
+            const selectedDeptName = filteredDepartment.find(item => item.name === String(value)); 
             setFormData({
                 ...formData,
-                department: parsedDeptNameAndId.deptName,
-                departmentId: parsedDeptNameAndId.deptId // Store departmentId separately
+                department: value,
+                deptId: selectedDeptName.deptId
             });
         } 
         else 
@@ -132,6 +135,9 @@ console.log(filteredDepartment);
 
     const submitHandler = (e : FormEvent) =>
     {
+        console.log("here");
+        console.log(formData);
+
         e.preventDefault();
 
         const nameError = validateName(formData.name);
@@ -158,12 +164,12 @@ console.log(filteredDepartment);
         {
             if(isAdd)
             {
-                dispatch(createEmployeeData(formData.name,formData.salary,formData.department,formData.departmentId))
+                dispatch(createEmployeeData(formData.name,formData.salary,formData.department,formData.deptId))
                 //console.log(formData)
             }
             else
             {
-                dispatch(updateEmployeeData(employee.uuid,formData.name,formData.salary,formData.department,formData.departmentId))
+                dispatch(updateEmployeeData(employee.uuid,formData.name,formData.salary,formData.department,formData.deptId))
                 //console.log(formData)
             }
 
@@ -219,15 +225,15 @@ console.log(filteredDepartment);
                 <Select
                     labelId="department-label"
                     name="department"
-                    value={JSON.stringify({ deptId: formData.departmentId, deptName: formData.department })}
+                    value={formData.department}
                     onChange={handleChange}
                     label="Department"
                     variant="outlined"
                 required
                 >{filteredDepartment.map((dept) => (
                     <MenuItem
-                        key={dept.id}
-                        value={JSON.stringify({ deptId: dept.id, deptName: dept.name })} // Pass both name and id as JSON string
+                        key={dept.name}
+                        value={dept.name} // Pass both name and id as JSON string
                     >
                         {dept.name}
                     </MenuItem>
