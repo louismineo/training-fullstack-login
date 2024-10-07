@@ -1,5 +1,7 @@
 import {Header} from './header'
 import { EmployeeForm } from './employeeForm'
+import { useEffect } from 'react';
+import { decodeJwt } from 'jose';
 import { useParams, useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../store/hooks';
 import { uiActions } from '../store/uiSlice';
@@ -12,6 +14,26 @@ export const AddEditPage = () =>
     const dispatch = useAppDispatch();
 
     const navigate = useNavigate();
+
+    //checking sessionstorage has the token or not
+    useEffect(()=>
+        {
+            const token = sessionStorage.getItem('jwtToken');
+    
+            if(!token)
+            {
+                    navigate('/login',{});
+            }
+            else
+            {
+                // decode the deptId, store in redux
+                const decoded = decodeJwt(token);
+                dispatch(uiActions.updateDeptId(Number(decoded.deptId)))
+                //const selector = useAppSelector(); 
+                
+            }
+        },[dispatch])
+
 
     const GoBackToMain = ()=>
     {  

@@ -23,16 +23,9 @@ export const SignUp = (username :string, plaintextPassword:string, departmentId 
             return response;
         }
 
-        try 
-        {
             const response = await createUserInDB(username, plaintextPassword, departmentId);
-
+            console.log(response)
             return response;
-        }
-        catch(e:any)
-        {
-            alert(e.message);
-        }
     }
 }
 
@@ -57,15 +50,10 @@ export const LogInAction = (username :string, plaintextPassword:string) =>
                 return response.data;
             }
     
-            try 
-            {
+
+
                 const response = await LogUserInInDB(username, plaintextPassword);
                 sessionStorage.setItem('jwtToken',response["token"])
                 return response;
-            }
-            catch(e:any)
-            {
-                alert(e.message)
-            }
         }
     }

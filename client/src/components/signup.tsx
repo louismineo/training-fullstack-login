@@ -1,5 +1,5 @@
 import React, { ChangeEvent,FormEvent, useState, useEffect } from 'react';
-import { TextField, Button, Paper, Typography, FormControl, InputLabel,Select,FormHelperText,MenuItem,SelectChangeEvent } from '@mui/material';
+import { TextField, Button, Paper, Typography, FormControl, InputLabel,Select,FormHelperText,MenuItem,SelectChangeEvent, Link } from '@mui/material';
 import { useAppSelector,useAppDispatch } from '../store/hooks'
 import { readDepartmentData } from '../store/departmentActions'
 import { SignUp as SignUpAction } from '../store/loginSignUpActions';
@@ -96,7 +96,7 @@ export const SignUp = () =>
         }
     };
 
-    const SignUpHandler = (e:FormEvent) =>
+    const SignUpHandler = async (e:FormEvent) =>
     {
         e.preventDefault();
 
@@ -117,8 +117,16 @@ export const SignUp = () =>
             return;
         }
 
-        dispatch(SignUpAction(signUpFormData.username,signUpFormData.password, Number(signUpFormData.departmentId)))
-        navigate('/login',{});
+        try 
+        {
+            await dispatch(SignUpAction(signUpFormData.username,signUpFormData.password, Number(signUpFormData.departmentId)))
+            navigate('/login',{});
+        }
+        catch(e:any)
+        {
+            //console.log(e.message);
+            alert(e.message +"\n\n"+ e.response.data)
+        }   
     }
 
 
@@ -179,6 +187,19 @@ export const SignUp = () =>
                     <Button type="submit" variant="contained" color="primary" onClick={SignUpHandler}fullWidth>
                     Sign Up
                     </Button>
+
+                    <div style={{display:'flex', justifyContent:'center', paddingTop:'1vh'}}>
+                    <Link
+                        component="button"
+                        onClick={()=>
+                            {
+                                navigate("/login",{})
+                            }
+                        }
+                    >
+                        Return to Login
+                    </Link>
+                </div>
                 </form>
             </Paper>
         </div>

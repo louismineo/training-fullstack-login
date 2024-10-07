@@ -6,8 +6,7 @@ import { decodeJwt } from 'jose';
 
 import { uiActions,userStates } from '../store/uiSlice'
 import { useEffect } from "react"
-import { useAppDispatch,useAppSelector } from '../store/hooks'
-import { readEmployeeData } from '../store/employeeActions'
+import { useAppDispatch} from '../store/hooks'
 
 import { useNavigate } from 'react-router-dom';
 
@@ -30,7 +29,10 @@ export const MainPage = () =>
             // decode the deptId, store in redux
             const decoded = decodeJwt(token);
             dispatch(uiActions.updateDeptId(Number(decoded.deptId)))
-            //const selector = useAppSelector(); 
+            
+            
+            // set the user state to isview
+            dispatch(uiActions.updateUserState(userStates.isView))
             
         }
     },[dispatch])

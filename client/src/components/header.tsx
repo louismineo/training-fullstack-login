@@ -30,9 +30,11 @@ export const Header = ({headerText, buttonText, buttonCallback} :HeaderProps ) =
         navigate('/login',{});
     }
 
+    
+
 
     return(
-    <header style={{ height : '10%', "display": "flex" , justifyContent:'space-between',"backgroundColor": "#375270", color:"white", alignItems:'center'}}>
+    <header style={{ height : '5%', "display": "flex" , justifyContent:'space-between',"backgroundColor": "#375270", color:"white", alignItems:'center'}}>
         <h1 style={{marginLeft:'20px'}}>{headerText}</h1>
         <div style = {{display : 'flex', flexDirection:'row'}}>
             <div>

@@ -40,7 +40,8 @@ export const Login = () =>
         }
         catch(e:any)
         {
-            alert(e.message)
+            
+            alert(e.message +"\n\n"+ e.response.data)
         }
         
     }
@@ -50,7 +51,7 @@ export const Login = () =>
     return (
         <div style= {{height:'100vh',backgroundColor:'black',display:'flex',flexDirection:'row',justifyContent : 'center', alignSelf:'center'}}>
             <Paper style={{ padding: 20, maxWidth: 400, margin: 'auto' }}>
-                <Typography variant="h5" component="h1">Log in</Typography>
+                <Typography variant="h5" component="h1" fontWeight={'bolder'}>Log in</Typography>
                 <form>
                     <TextField
                         label="Username"
@@ -87,7 +88,7 @@ export const Login = () =>
                     Login
                     </Button>
                 </form>
-                <div style={{display:'flex', justifyContent:'center'}}>
+                <div style={{display:'flex', justifyContent:'center', paddingTop:'1vh'}}>
                     <Link
                         component="button"
                         onClick={()=>

@@ -4,7 +4,7 @@ import Modal from './Modal';
 import { useState } from 'react';
 import { deleteEmployeeData } from '../store/employeeActions';
 import { uiActions,userStates } from '../store/uiSlice';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { useAppDispatch } from '../store/hooks';
 import { useNavigate } from 'react-router-dom';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
