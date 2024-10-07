@@ -52,9 +52,7 @@ export const EmployeeCard = ({emp}: EmployeeCardProps)=>
         dispatch(deleteEmployeeData(emp.uuid))
         alert(emp.name+" has been deleted.");
         setOpenModal(false);
-        //window.location.reload();
-
-
+        window.location.reload();
     }
 
     return (

@@ -26,8 +26,6 @@ export async function GetAllEmployeesFromDB(deptIdParam:number | undefined) : Pr
 export async function AddNewEmployeeIntoDB(emp_req:EmployeeRequest) : Promise<any>
 {
 
-    console.log(emp_req)
-
         //insert 
         const newEmployee = await Employee.create(emp_req);
         return newEmployee; 

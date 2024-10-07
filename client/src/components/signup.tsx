@@ -73,7 +73,6 @@ export const SignUp = () =>
         const newValue = (name === 'departmentId' )? Number(value):value;       
         
         
-        console.log(newValue)
 
         setSignUpFormData({
             ...signUpFormData,

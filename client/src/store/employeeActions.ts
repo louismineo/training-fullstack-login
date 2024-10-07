@@ -8,7 +8,6 @@ import axios from "axios";
 
 export const createEmployeeData = (empName:string, empSalary:number, empDepartment:string, empDeptId:number) =>
 {
-    
     return async (dispatch:any) =>
         {
             const createEmployeeInDB = async(empName:string, empSalary:number, empDepartment:string,deptId:number ) =>
@@ -22,7 +21,6 @@ export const createEmployeeData = (empName:string, empSalary:number, empDepartme
                     "deptId": deptId
                 }
 
-                console.log(employeeData)
 
                 const response = await axios.post('http://localhost:1337/employee', employeeData
                 )
@@ -41,7 +39,7 @@ export const createEmployeeData = (empName:string, empSalary:number, empDepartme
             }
             catch(e:any)
             {
-                alert(e.message);
+                alert("create employee : \n" + e.message +": "+ e.response.request.statusText);
             }
         }
 }
@@ -55,9 +53,6 @@ export const readEmployeeData = (deptId:number) => // returns array, not object
         const fetchAllEmployeesFromDB = async(deptId : number) =>
         {
             const response = await axios.get('http://localhost:1337/employee?deptId='+ deptId)
-
-            console.log("here " + deptId)
-            console.log(response)
 
             if(response.status !== 200)
                 throw Error(response.data);
@@ -94,8 +89,6 @@ export const updateEmployeeData = (empUUID:string, empName:string, empSalary:num
                     "department": empDepartment,
                     "deptId": empDeptId
                 }
-
-                console.log(employeeData)
 
                 const response = await axios.put('http://localhost:1337/employee/'+empUUID, employeeData
                 )
@@ -142,7 +135,7 @@ export const deleteEmployeeData = (empUUID:string) =>
             }
             catch(e:any)
             {
-                alert(e.message);
+                alert(e.message +": "+ e.response.request.statusText);
             }
         }
 }

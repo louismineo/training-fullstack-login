@@ -29,7 +29,6 @@ export const MainPage = () =>
         {
             // decode the deptId, store in redux
             const decoded = decodeJwt(token);
-            console.log(decoded.deptId)
             dispatch(uiActions.updateDeptId(Number(decoded.deptId)))
             //const selector = useAppSelector(); 
             

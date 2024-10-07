@@ -165,12 +165,10 @@ console.log(filteredDepartment);
             if(isAdd)
             {
                 dispatch(createEmployeeData(formData.name,formData.salary,formData.department,formData.deptId))
-                //console.log(formData)
             }
             else
             {
                 dispatch(updateEmployeeData(employee.uuid,formData.name,formData.salary,formData.department,formData.deptId))
-                //console.log(formData)
             }
 
             alert(isAdd? formData.name + " has been added": employee.uuid + " has been edited.")

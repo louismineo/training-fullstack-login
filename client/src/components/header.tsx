@@ -26,7 +26,6 @@ export const Header = ({headerText, buttonText, buttonCallback} :HeaderProps ) =
 
     const LogOutHandler = () => 
     {
-        console.log("log out pressed");
         sessionStorage.clear();
         navigate('/login',{});
     }
