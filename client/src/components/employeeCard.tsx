@@ -22,8 +22,6 @@ type EmployeeCardProps =
 
 export const EmployeeCard = ({emp}: EmployeeCardProps)=>
 {
-
-
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -31,14 +29,12 @@ export const EmployeeCard = ({emp}: EmployeeCardProps)=>
 
     const editEmployeeHandler = (emp:Employee) =>
     {
-        //console.log("EDITTING "+emp.name)
         dispatch(uiActions.updateUserState(userStates.isEdit))
         navigate(`/addEdit/${emp.uuid}`, {state:emp})
     }
 
     const deleteEmployeeHandler = () =>
     {
-        //console.log(emp.name)
         setOpenModal(true)
     }
 

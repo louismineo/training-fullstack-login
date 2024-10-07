@@ -107,7 +107,6 @@ export const updateEmployeeData = (empUUID:string, empName:string, empSalary:num
             }
             catch(e:any)
             {
-                //console.log(e);
                 alert(e.message +": "+ e.response.request.statusText);
             }
         }

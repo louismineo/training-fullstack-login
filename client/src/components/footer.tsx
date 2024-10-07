@@ -49,16 +49,12 @@ export const Footer = () =>
     const dispatch = useAppDispatch();
     function goPreviousPage()
     {
-        //console.log("BACK")
         dispatch(uiActions.previousPage())
-        //console.log(pageNumber);
     }
 
     function goNextPage()
     {
-       //console.log("NEXT")
         dispatch(uiActions.nextPage())
-        //console.log(pageNumber);
     }
 
 

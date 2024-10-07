@@ -41,8 +41,6 @@ export const EmployeeForm = ({isAdd, employee}:EmployeeFormProp) =>
     //filter out the admin
     const filteredDepartment = departmentsArray.filter(dept => dept.deptId !== 1);
 
-console.log(filteredDepartment);
-
     const [formErrorData, setFormErrorData] = useState({
         name: '',
         salary: '',
@@ -135,18 +133,11 @@ console.log(filteredDepartment);
 
     const submitHandler = (e : FormEvent) =>
     {
-        console.log("here");
-        console.log(formData);
-
         e.preventDefault();
 
         const nameError = validateName(formData.name);
         const salaryError = validateSalary(formData.salary);
         const departmentError = validateDepartment(formData.department);
-        
-        //console.log("name:"+!!nameError);
-        //console.log("salary"+!!salaryError);
-        //console.log("dept"+!!departmentError);
 
         if(nameError !=='' || salaryError !=='' || departmentError !=='')
         {

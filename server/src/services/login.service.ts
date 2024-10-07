@@ -35,7 +35,6 @@ export async function LoginHandler(username:string ,plaintextPassword:string) : 
     }
     catch (e)
     {
-        console.log(e)
         //throw new Error(e.message)
     }
     

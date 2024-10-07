@@ -1,5 +1,5 @@
 import {Header} from './header'
-import { employee, EmployeeForm } from './employeeForm'
+import { EmployeeForm } from './employeeForm'
 import { useParams, useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../store/hooks';
 import { uiActions } from '../store/uiSlice';
@@ -24,9 +24,6 @@ export const AddEditPage = () =>
     const employeeData = location.state || {uuid:'' ,name: '', salary: 0, department: '' }; // Fallback in case no state is passed
 
     
-
-
-
     const {uuid} = useParams(); // Get uuid from the URL (if exists)
     let isAdd :boolean = false;
 

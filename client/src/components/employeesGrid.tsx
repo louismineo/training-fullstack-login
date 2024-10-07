@@ -11,24 +11,11 @@ export const EmployeesGrid = () =>
     const isDesktop:boolean = useAppSelector((state)=>state.ui.isDesktop)
 
     const dispatch = useAppDispatch();
-    /*
-    const componentStyle = {
-        display:"Grid" ,
-        height : isDesktop ? '85%' : 'auto',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gridTemplateColumns: `repeat(${isDesktop ? 2 : 1}, 1fr)`,
-        gridTemplateRows: `repeat(${isDesktop ? 5 : 10}, 1fr)`,
-        gap: '0%'
-    }
-    */
 
     const deptId = useAppSelector((state)=>state.ui.currentUserDeptId)
 
     useEffect(()=>
         {
-            
-            //console.log('Dispatching action ... readEmployeeData');
             dispatch(readEmployeeData(deptId))
         },[dispatch,deptId])
     
@@ -55,12 +42,6 @@ export const EmployeesGrid = () =>
 
 
     const currentTenEmployees = getPaginatedData(employeesArray, pageNumber, cardsPerPage);
-    //console.log(current10Employees)
-
-    
-
-
-
 
     return(
         <div style = {{
